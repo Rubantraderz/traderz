@@ -65,6 +65,12 @@ public class PomClass {
     @FindBy(xpath = "//span[text()='SIGN PURCHASE ORDER']")
     private WebElement SigninPurchaseOrder;
     
+    @FindBy(xpath = "//span[text()='CHECKOUT']")
+    private WebElement checkout;
+    
+    @FindBy(xpath = "//p[text()='Continue Shopping ']")
+    private WebElement continueshopping;
+    
     @FindBy(xpath = "//img[@src='/icons/edit.svg']")
     private WebElement Upload_LPO_icon;
     
@@ -74,6 +80,27 @@ public class PomClass {
     @FindBy(xpath = "//span[text()='Upload File']")
     private WebElement LPO_uploading;
     
+   @FindBy(xpath = "//input[@id='email']")
+   private WebElement Email_stripe;
+   
+   @FindBy(xpath = "//input[@id='cardNumber']")
+   private WebElement Cardnumber_stripe;
+   
+   @FindBy(xpath = "//input[@id='cardExpiry']")
+   private WebElement Expiry_stripe;
+   
+   @FindBy(xpath = "//input[@id='cardCvc']")
+   private WebElement CCV_stripe;
+   
+   @FindBy(xpath = "//input[@id='billingName']")
+   private WebElement Holdername_stripe;
+   
+   @FindBy(xpath = "//input[@id='billingPostalCode']")
+   private WebElement postalcode_stripe;
+   
+   @FindBy(xpath = "//div[@class='SubmitButton-CheckmarkIcon']")
+   private WebElement Pay_stripe;
+   
     
     
     
@@ -165,13 +192,15 @@ public class PomClass {
        Thread.sleep(2000);
        reviewItems.click();
        Thread.sleep(3000);
-       Upload_LPO_icon.click();
-       Thread.sleep(3000);
-       LPO_verify_button.click();
-       Thread.sleep(3000);
-       LPO_uploading.sendKeys("/traderz/Datafiles/bug report.pdf");
-       Reporter.log("CreatingOrderFullFlow", true);
-        
+       checkout.click();
+       Thread.sleep(5000);
+       continueshopping.click();
+      // Upload_LPO_icon.click();
+      // Thread.sleep(3000);
+      // LPO_verify_button.click();
+      // Thread.sleep(3000);
+      // LPO_uploading.sendKeys("/traderz/Datafiles/bug report.pdf");
+       Reporter.log("CreatingOrderFullFlow", true);     
     }
     
     //without uploading LPO...direct signInPurchase....
@@ -209,7 +238,24 @@ public class PomClass {
         Thread.sleep(2000);
         reviewItems.click();
         Thread.sleep(3000);
-        SigninPurchaseOrder.click();
+      //SigninPurchaseOrder.click(); 
+        checkout.click();
+        Thread.sleep(3000);
+        Email_stripe.sendKeys("ruban@yopmail.com");
+        Thread.sleep(2000);
+        Cardnumber_stripe.sendKeys("4242 4242 4242 4242");
+        Thread.sleep(2000);
+        Expiry_stripe.sendKeys("12/34");
+        Thread.sleep(2000);
+        CCV_stripe.sendKeys("123");
+        Thread.sleep(2000);
+        Holdername_stripe.sendKeys("Ruban");
+        Thread.sleep(2000);
+        postalcode_stripe.sendKeys("600001");
+        Thread.sleep(3000);	
+        Pay_stripe.click();	
+        Thread.sleep(20000);
+        continueshopping.click();
         Reporter.log("2_CreatingOrderFullFlow", true);
          
      }
