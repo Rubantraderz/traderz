@@ -9,8 +9,8 @@ import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 
 public class BaseClass {
-    protected WebDriver driver;
-    protected WebDriverWait wait;
+    public WebDriver driver;       //protected
+    public WebDriverWait wait;
 
     // Runs once before any @Test methods in the subclass
     @BeforeClass
