@@ -2,32 +2,32 @@
 <testng-results ignored="6" total="7" passed="1" failed="0" skipped="0">
   <reporter-output>
     <line>
-      <![CDATA[AdminApprovedOrdered_ScheduledDelivery]]>
+      <![CDATA[CreatingOrderFullFlow]]>
     </line>
     <line>
-      <![CDATA[Testcase_07 is pass]]>
+      <![CDATA[Testcase_05 is pass]]>
     </line>
   </reporter-output>
-  <suite started-at="2026-03-10T15:12:15 IST" name="Surefire suite" finished-at="2026-03-10T15:14:44 IST" duration-ms="148556">
+  <suite started-at="2026-03-10T17:12:04 IST" name="Surefire suite" finished-at="2026-03-10T17:13:12 IST" duration-ms="67938">
     <groups>
     </groups>
-    <test started-at="2026-03-10T15:12:15 IST" name="Surefire test" finished-at="2026-03-10T15:14:44 IST" duration-ms="148556">
+    <test started-at="2026-03-10T17:12:04 IST" name="Surefire test" finished-at="2026-03-10T17:13:12 IST" duration-ms="67938">
       <class name="customerPortal.Hybrid">
-        <test-method is-config="true" signature="beforeAll()[pri:0, instance:customerPortal.Hybrid@1f021e6c]" started-at="2026-03-10T15:12:15 IST" name="beforeAll" finished-at="2026-03-10T15:12:17 IST" duration-ms="2032" status="PASS">
+        <test-method is-config="true" signature="beforeAll()[pri:0, instance:customerPortal.Hybrid@1f021e6c]" started-at="2026-03-10T17:12:04 IST" name="beforeAll" finished-at="2026-03-10T17:12:06 IST" duration-ms="2442" status="PASS">
           <reporter-output>
           </reporter-output>
         </test-method> <!-- beforeAll -->
-        <test-method signature="Testcase_007()[pri:0, instance:customerPortal.Hybrid@1f021e6c]" started-at="2026-03-10T15:12:17 IST" name="Testcase_007" finished-at="2026-03-10T15:14:44 IST" duration-ms="146510" status="PASS">
+        <test-method signature="Testcase_005()[pri:0, instance:customerPortal.Hybrid@1f021e6c]" started-at="2026-03-10T17:12:06 IST" name="Testcase_005" finished-at="2026-03-10T17:13:12 IST" duration-ms="65179" status="PASS">
           <reporter-output>
             <line>
-              <![CDATA[AdminApprovedOrdered_ScheduledDelivery]]>
+              <![CDATA[CreatingOrderFullFlow]]>
             </line>
             <line>
-              <![CDATA[Testcase_07 is pass]]>
+              <![CDATA[Testcase_05 is pass]]>
             </line>
           </reporter-output>
-        </test-method> <!-- Testcase_007 -->
-        <test-method is-config="true" signature="afterAll()[pri:0, instance:customerPortal.Hybrid@1f021e6c]" started-at="2026-03-10T15:14:44 IST" name="afterAll" finished-at="2026-03-10T15:14:44 IST" duration-ms="0" status="PASS">
+        </test-method> <!-- Testcase_005 -->
+        <test-method is-config="true" signature="afterAll()[pri:0, instance:customerPortal.Hybrid@1f021e6c]" started-at="2026-03-10T17:13:12 IST" name="afterAll" finished-at="2026-03-10T17:13:12 IST" duration-ms="292" status="PASS">
           <reporter-output>
           </reporter-output>
         </test-method> <!-- afterAll -->

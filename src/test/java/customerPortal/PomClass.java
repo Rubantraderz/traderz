@@ -1,17 +1,17 @@
 package customerPortal;
 
 
+import java.util.Map;
+
+import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
-import org.openqa.selenium.WebDriver;
 import org.testng.Reporter;
 
 import io.restassured.RestAssured;
 import io.restassured.response.Response;
-
-import java.util.Map;
 
 
 public class PomClass {
@@ -21,6 +21,8 @@ public class PomClass {
     public PomClass(WebDriver driver) {
         this.driver = driver;
     }
+    
+    //----------------------Customer Portal Elements------------------------------//
     
     @FindBy(xpath = "//input[@type='email']")
     private WebElement mailid;
@@ -39,7 +41,6 @@ public class PomClass {
 
     @FindBy(xpath = "//span[text()='Login']")
     private WebElement AdminLoginbutton;
-    
     
     @FindBy(xpath = "//a[@href='/products' and .//p[normalize-space()='Products']]")
     private WebElement Producttab;
@@ -74,7 +75,6 @@ public class PomClass {
     @FindBy(xpath = "//span[text()='Credit/debit card']")
     private WebElement credit_card_debitcard;
  
-    
     @FindBy(xpath = "//span[text()='Cash On Delivery']")
     private WebElement COD;
     
@@ -102,8 +102,14 @@ public class PomClass {
     @FindBy(xpath = "//button[text()='Verify']")
     private WebElement LPO_verify_button;
     
-    @FindBy(xpath = "//span[text()='Upload File']")
+    @FindBy(xpath = "//input[@type='file']")
     private WebElement LPO_uploading;
+    
+    @FindBy(xpath = "(//button[@type='button'])[21]")
+    private WebElement LPO_Next_button;
+    
+    @FindBy(xpath = "//button[@aria-label='Close']")
+    private WebElement LPO_closebutton;
     
    @FindBy(xpath = "//input[@id='email']")
    private WebElement Email_stripe;
@@ -132,7 +138,7 @@ public class PomClass {
    @FindBy(xpath = "//button[text()='Logout']")
    private WebElement Logoutpopup_button;
    
-   //----Admin Elements----------------//
+   //---------------------------------Admin Elements------------------------------------//
    
    @FindBy(xpath = "//a[@href='/requests/list']")
    private WebElement Admin_Request_tab;
@@ -221,20 +227,19 @@ public class PomClass {
    
    
     
-    //------------------------------//
+    //--------------------------------------------Test-Execution---------------------------------------------------------------------//
     
-    
-    
+    //Customer Portal Login Testcases
     public void Testcase_01() throws InterruptedException {
         Thread.sleep(2000);
         mailid.sendKeys("ruban@yopmail.com");
         password.sendKeys("Admin@123"); 
         Thread.sleep(2000);
         submitbutton.click();
-        
         Reporter.log("LoginCustomer", true);
     }
     
+    // After login, directly clicking products tab without searching for product.
     public void Testcase_02() throws InterruptedException {
         Thread.sleep(2000);
         mailid.sendKeys("ruban@yopmail.com");
@@ -242,10 +247,11 @@ public class PomClass {
         Thread.sleep(2000);
         submitbutton.click();
         Thread.sleep(3000);
-       Producttab.click();
+        Producttab.click();
         Reporter.log("ProdctsTab opened", true);
     }
     
+    // After login, directly clicking products tab with searching for product.
     public void Testcase_03() throws InterruptedException {
         Thread.sleep(2000);
         mailid.sendKeys("ruban@yopmail.com");
@@ -253,12 +259,13 @@ public class PomClass {
         Thread.sleep(2000);
         submitbutton.click();
         Thread.sleep(3000);
-       Producttab.click();
-       Thread.sleep(2000);
-       Searchbar.sendKeys("light");
+        Producttab.click();
+        Thread.sleep(2000);
+        Searchbar.sendKeys("light");
         Reporter.log("Products Searched", true);
     }
     
+    // After login, directly clicking products tab with searching for product and click on that product.
     public void Testcase_04() throws InterruptedException {
         Thread.sleep(2000);
         mailid.sendKeys("ruban@yopmail.com");
@@ -266,16 +273,15 @@ public class PomClass {
         Thread.sleep(2000);
         submitbutton.click();
         Thread.sleep(3000);
-       Producttab.click();
-       Thread.sleep(2000);
-       Searchbar.sendKeys("light");
-       Thread.sleep(2000);
-       productclick.click();
+        Producttab.click();
+        Thread.sleep(2000);
+        Searchbar.sendKeys("light");
+        Thread.sleep(2000);
+        productclick.click();
         Reporter.log("Prodcts Searched & clicked", true);
     }
     
-    //with uploading LPO...
-    
+    //with uploading LPO...Order creation full flow with COD payment and uploading LPO and sign purchase order.
     public void Testcase_05() throws InterruptedException {
        Thread.sleep(2000);
        mailid.sendKeys("ruban@yopmail.com");
@@ -309,19 +315,23 @@ public class PomClass {
        Thread.sleep(2000);
        reviewItems.click();
        Thread.sleep(3000);
+       Upload_LPO_icon.click();
+       Thread.sleep(3000);
+       LPO_verify_button.click();
+       Thread.sleep(3000);
+       LPO_uploading.sendKeys("C:\\Users\\rubanraj\\OneDrive - traderz com\\Documents");
+       Thread.sleep(4000);
+       LPO_Next_button.click();
+       Thread.sleep(4000);
+       LPO_closebutton.click();
+       Thread.sleep(2000);
        checkout.click();
-       Thread.sleep(5000);
+       Thread.sleep(3000);
        continueshopping.click();
-      // Upload_LPO_icon.click();
-      // Thread.sleep(3000);
-      // LPO_verify_button.click();
-      // Thread.sleep(3000);
-      // LPO_uploading.sendKeys("/traderz/Datafiles/bug report.pdf");
        Reporter.log("CreatingOrderFullFlow", true);     
     }
     
-    //without uploading LPO...direct signInPurchase....
-    
+    //without uploading LPO...direct signInPurchase....& Card payment....
     public void Testcase_06() throws InterruptedException {
         Thread.sleep(2000);
         mailid.sendKeys("ruban@yopmail.com");
@@ -466,8 +476,8 @@ public class PomClass {
         Admin_Orders_tab.click();
         Thread.sleep(2000);
         pendingExpeditorapproval.click();
-        
 		Thread.sleep(2000);
+		
 		// ---------- GET ORDER ID ----------
 		String currentUrl = driver.getCurrentUrl();
 		String orderId = currentUrl.substring(currentUrl.lastIndexOf("/") + 1);
@@ -581,7 +591,7 @@ public class PomClass {
         Thread.sleep(2000);
         ArrangeShipmentbutton.click();
         
-		Reporter.log("AdminApprovedOrdered_ScheduledDelivery", true);
+		Reporter.log("AdminApprovedOrdered_TO_ScheduledDelivery", true);
     }
     
 }

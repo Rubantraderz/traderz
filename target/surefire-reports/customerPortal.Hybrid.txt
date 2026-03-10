@@ -1,4 +1,4 @@
 -------------------------------------------------------------------------------
 Test set: customerPortal.Hybrid
 -------------------------------------------------------------------------------
-Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 148.9 s -- in customerPortal.Hybrid
+Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 68.20 s -- in customerPortal.Hybrid
