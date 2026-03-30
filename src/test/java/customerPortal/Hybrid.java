@@ -65,9 +65,21 @@ public class Hybrid extends BaseClass{
         Reporter.log("Testcase_07 is pass", true);  
     }
     
+    @Test
+    public void Testcase_008() throws InterruptedException{
+        PomClass pc = new PomClass(driver);
+        PageFactory.initElements(driver, pc);  
+        pc.Testcase_08();
+        Reporter.log("Testcase_08 is pass", true);  
+    }
     
-    
-    
+    @Test
+    public void Testcase_009() throws InterruptedException{
+        PomClass pc = new PomClass(driver);
+        PageFactory.initElements(driver, pc);  
+        pc.Testcase_09();
+        Reporter.log("Testcase_09 is pass", true);  
+    }
     
     
     

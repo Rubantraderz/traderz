@@ -1,13 +1,20 @@
 package customerPortal;
 
 
+import java.time.Duration;
 import java.util.Map;
 
+import org.openqa.selenium.By;
+import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.edge.EdgeDriver;
+import org.openqa.selenium.edge.EdgeOptions;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
+import org.testng.Assert;
 import org.testng.Reporter;
 
 import io.restassured.RestAssured;
@@ -140,9 +147,19 @@ public class PomClass {
    
    //---------------------------------Admin Elements------------------------------------//
    
+   @FindBy(xpath = "//button[text()=' View Request ']")
+   private WebElement Admin_Viewrequestbutton;
+   
    @FindBy(xpath = "//a[@href='/requests/list']")
    private WebElement Admin_Request_tab;
-    
+   
+   @FindBy(xpath = "(//span[text()='Hold'])[1]")
+   private WebElement Admin_Holdclick;
+   
+   @FindBy(xpath = "//a[text()='View Order Details']") 
+   private WebElement Admin_Vieworderdetails;
+   
+   
    @FindBy(xpath = "(//span[text()='Pending'])[1]")
    private WebElement Admin_Pendingclick;
    
@@ -155,8 +172,42 @@ public class PomClass {
    @FindBy(xpath = "//button[text()=' Approve ']")
    private WebElement Admin_Approve_popup_Approvebutton;
    
+   @FindBy(xpath = "//button[text()=' Hold order ']")
+   private WebElement creditcontroller_Holdorderbutton;
+   
+   @FindBy(xpath = "//span[text()='Available credit too low']")
+   private WebElement comment_Holdorder_creditlow;
+   
+   @FindBy(xpath = "(//button[text()=' Hold order '])[2]")
+   private WebElement creditcontroller_Holdorderbutton_creditlow;
+   
    @FindBy(xpath = "//a[@href='/orders/list']")
    private WebElement Admin_Orders_tab;
+   
+   @FindBy(xpath = "(//a[@href='/orders/list'])[1]")
+   private WebElement SalesAgent_Orders_tab;
+   
+   @FindBy(xpath = "(//span[text()=' Held '])[1]")
+   private WebElement heldordersList;
+   
+   @FindBy(xpath = "(//tr[@class='p-row-even'])[1]")
+   private WebElement heldorderclick;
+   
+   
+   @FindBy(xpath = "//button[contains(.,'Unhold')]")
+   private WebElement Salesagent_unholdbutton;
+   
+   @FindBy(xpath = "//span[text()='All good now']")
+   private WebElement Salesagent_unhold_comment;
+   
+   @FindBy(xpath = "//label[text()=' Browse.. ']")
+   private WebElement Salesagent_upload_browsebutton;
+   
+   @FindBy(xpath = "//input[@type='file']")
+   private WebElement Salesagent_upload_unholdDoc_input;
+   
+   @FindBy(xpath = "//button[text()=' Send ']")
+   private WebElement Salesagent_unholdDoc_sendbutton;
    
    @FindBy(xpath = "(//span[text()='Expeditor Approval'])[1]")
    private WebElement pendingExpeditorapproval;
@@ -432,7 +483,11 @@ public class PomClass {
         driver.quit();
 
         // Open new browser (creditcontroller)
-        driver = new ChromeDriver();
+        System.setProperty("webdriver.edge.driver", 
+        	    "C:\\Users\\rubanraj\\Downloads\\edgedriver_win64\\msedgedriver.exe");
+        EdgeOptions options = new EdgeOptions();
+        driver = new EdgeDriver(options);
+    
         driver.manage().window().maximize();
         driver.get("https://admin.traderzdev.com");
 
@@ -459,7 +514,7 @@ public class PomClass {
         driver.quit();
         
         // Open new browser (Expeditator)
-        driver = new ChromeDriver();
+        driver = new EdgeDriver();
         driver.manage().window().maximize();
         driver.get("https://admin.traderzdev.com");
 
@@ -517,7 +572,7 @@ public class PomClass {
 		Add_a_reason.sendKeys("Schedule delivery for today");
 		Thread.sleep(2000);
 		ScheduleDelivery_donebutton.click();
-		
+		Thread.sleep(4000);
 		
 		// ---------- LOGIN SECOND USER (harish) ----------
 		Response loginResponse2 = RestAssured
@@ -540,12 +595,13 @@ public class PomClass {
 		        .post("https://api.traderzdev.com/admin/order/" + orderId + "/skip_to_shipment");
 
 		System.out.println("Skip To Shipment Status: " + skipShipmentResponse.getStatusCode());
+		Thread.sleep(4000);
 		System.out.println(skipShipmentResponse.getBody().asString());
-
+        Thread.sleep(2000);
 
 		
 		// Open new browser (Logistics Manager)
-        driver = new ChromeDriver();
+        driver = new EdgeDriver();
         driver.manage().window().maximize();
         driver.get("https://admin.traderzdev.com");
 
@@ -594,5 +650,241 @@ public class PomClass {
 		Reporter.log("AdminApprovedOrdered_TO_ScheduledDelivery", true);
     }
     
-}
+    // Credit controller rejecting the order and customer trying to place order again with same product and same flow.
+    public void Testcase_08() throws InterruptedException {
+        Thread.sleep(2000);
+        mailid.sendKeys("ruban@yopmail.com");
+        password.sendKeys("Admin@123"); 
+        Thread.sleep(2000);
+        submitbutton.click();
+        Thread.sleep(3000);
+        Producttab.click();
+        Thread.sleep(2000);
+        Searchbar.sendKeys("light");
+        Thread.sleep(2000);
+        productclick.click();
+        Thread.sleep(4000);
+        Addtocartclickon_productdetails1.click();
+        Thread.sleep(3000);
+        Addtocartclicktop.click();
+        Thread.sleep(3000);
+        Proceedtocart.click();
+        Thread.sleep(3000);
+        Proceedtocheckout.click();
+        Thread.sleep(3000);
+        Payment_cash.click();
+        Thread.sleep(2000);
+        Select_Payment_term.click();
+        Thread.sleep(2000);
+        COD.click();
+        Thread.sleep(2000);
+        Selectshippingaddress.click();
+        Thread.sleep(2000);
+        Selecting_address.click();
+        Thread.sleep(2000);
+        reviewItems.click();
+        Thread.sleep(3000);
+        checkout.click();
+        Thread.sleep(5000);
+        continueshopping.click();
+        Thread.sleep(2000);
+        Logout.click();
+        Thread.sleep(2000);
+        Logoutpopup_button.click();
+        // Close browser
+        driver.quit();
+
+        // Open new browser (creditcontroller)
+        System.setProperty("webdriver.edge.driver", 
+        	    "C:\\Users\\rubanraj\\Downloads\\edgedriver_win64\\msedgedriver.exe");
+        EdgeOptions options = new EdgeOptions();
+        driver = new EdgeDriver(options);
+        driver.manage().window().maximize();
+        driver.get("https://admin.traderzdev.com");
+
+        // Reinitialize PageFactory elements
+        PageFactory.initElements(driver, this);
+        Thread.sleep(2000);
+
+        // Admin login (Credit Controller Approval)
+        Adminmailid.sendKeys("muneeb@electricway.com");
+        Adminpassword.sendKeys("Admin@123");
+        Thread.sleep(2000);
+        AdminLoginbutton.click();
+        Thread.sleep(5000);
+        Admin_Request_tab.click();
+        Thread.sleep(2000);
+        Admin_Pendingclick.click();
+        Thread.sleep(2000);
+        creditcontroller_Holdorderbutton.click();
+        Thread.sleep(2000);
+        comment_Holdorder_creditlow.click();
+        Thread.sleep(2000);
+        creditcontroller_Holdorderbutton_creditlow.click();
+        Thread.sleep(2000);
+        driver.quit();                  
+        
+     // Open new browser (Sales agent)
+        driver = new EdgeDriver();
+        driver.manage().window().maximize();
+        driver.get("https://admin.traderzdev.com");
+
+        // Reinitialize PageFactory elements
+        PageFactory.initElements(driver, this);
+        Thread.sleep(2000);
+
+        // Admin login (Sales agent trying to place order again after credit controller rejected the order)
+        Adminmailid.sendKeys("harish@traderz.com");
+        Adminpassword.sendKeys("Admin@123");
+        Thread.sleep(2000);
+        AdminLoginbutton.click();
+        Thread.sleep(5000);
+        Admin_Viewrequestbutton.click();
+       // Admin_Request_tab.click();
+       // Thread.sleep(4000);
+       // Admin_Holdclick.click();
+       // Thread.sleep(3000);
+       // Admin_Vieworderdetails.click();
+         Thread.sleep(3000);
+        Salesagent_unholdbutton.click();
+        Thread.sleep(2000);
+        Salesagent_unhold_comment.click();
+        Thread.sleep(2000);
+        Salesagent_upload_unholdDoc_input.sendKeys("C:\\Users\\rubanraj\\OneDrive - traderz com\\Documents\\bug report.pdf");
+        Thread.sleep(4000);
+        Salesagent_unholdDoc_sendbutton.click();
+     // Close browser
+        driver.quit();
+
+        // Open new browser (creditcontroller)
+        driver = new EdgeDriver();
+        driver.manage().window().maximize();
+        driver.get("https://admin.traderzdev.com");
+
+        // Reinitialize PageFactory elements
+        PageFactory.initElements(driver, this);
+        Thread.sleep(2000);
+
+        // Admin login (Credit Controller Approval)
+        Adminmailid.sendKeys("muneeb@electricway.com");
+        Adminpassword.sendKeys("Admin@123");
+        Thread.sleep(2000);
+        AdminLoginbutton.click();
+        Thread.sleep(5000);
+        Admin_Viewrequestbutton.click();
+        Thread.sleep(3000);
+       // Admin_Pendingclick.click();
+       // Thread.sleep(2000);
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(20));
+
+
+     // -------- Verify comment --------
+     WebElement commentText = wait.until(
+             ExpectedConditions.visibilityOfElementLocated(
+                     By.xpath("//*[contains(text(),'All good now')]") 
+             )
+     );
+
+     System.out.println("Comment visible: " + commentText.getText());
+     
+     // Click Attachments tab
+     WebElement attachmentsTab = wait.until(
+             ExpectedConditions.elementToBeClickable(
+                     By.xpath("//button[text()='Attachments']")
+             )
+     );
+
+     attachmentsTab.click();
+
+
+
+     // -------- Verify uploaded PDF --------
+     WebElement uploadedPdf = wait.until(
+             ExpectedConditions.visibilityOfElementLocated(
+                     By.xpath("//*[contains(text(),'bug report.pdf')]")
+             )
+     );
+
+     System.out.println("PDF visible: " + uploadedPdf.getText());
+
+
+     // -------- Assertions --------
+     Assert.assertTrue(commentText.isDisplayed(), "Comment not visible");
+     Assert.assertTrue(uploadedPdf.isDisplayed(), "Uploaded PDF not visible");
+    }
+
+
+//Multiple product search, add to cart, place order, 
+    public void Testcase_09() throws InterruptedException {
+
+        Thread.sleep(2000);
+        mailid.sendKeys("ruban@yopmail.com");
+        password.sendKeys("Admin@123"); 
+        Thread.sleep(2000);
+        submitbutton.click();
+
+        Thread.sleep(3000);
+        Producttab.click();
+
+        Thread.sleep(2000);
+        Searchbar.sendKeys("light");
+        Thread.sleep(2000);
+        Searchbar.clear();
+
+        Searchbar.sendKeys("bulb");
+        Thread.sleep(2000);
+        Searchbar.clear();
+
+        Searchbar.sendKeys("wire");
+        Thread.sleep(2000);
+        Searchbar.clear();
+        
+        Searchbar.sendKeys("Abb");
+        Thread.sleep(2000);
+        
+
+        productclick.click();
+        Thread.sleep(4000);
+        
+        try {
+            driver.findElement(By.xpath("//button[@aria-label='Add to Cart']")).click();
+            System.out.println("Clicked Add to Cart button");
+        } catch (NoSuchElementException e) {
+            Addtocartclicktop.click();
+            System.out.println("Add to Cart not found, clicked Addtocartclicktop");
+        }
+        
+         
+    
+    Thread.sleep(3000);
+    Proceedtocart.click();
+    Thread.sleep(3000);
+    Proceedtocheckout.click();
+    Thread.sleep(3000);
+    Payment_cash.click();
+    Thread.sleep(2000);
+    Select_Payment_term.click();
+    Thread.sleep(2000);
+    COD.click();
+    Thread.sleep(2000);
+    Selectshippingaddress.click();
+    Thread.sleep(2000);
+    Selecting_address.click();
+    Thread.sleep(2000);
+    reviewItems.click();
+    Thread.sleep(3000);
+    checkout.click();
+    Thread.sleep(5000);
+    continueshopping.click();
+    Thread.sleep(2000);
+    Logout.click();
+    Thread.sleep(2000);
+    Logoutpopup_button.click();
+    // Close browser
+    driver.quit();
+
+
+}}
+
+
     
