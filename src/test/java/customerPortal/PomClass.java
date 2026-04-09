@@ -5,7 +5,6 @@ import java.time.Duration;
 import java.util.Map;
 
 import org.openqa.selenium.By;
-import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.edge.EdgeDriver;
@@ -85,6 +84,9 @@ public class PomClass {
     @FindBy(xpath = "//span[text()='Cash On Delivery']")
     private WebElement COD;
     
+    @FindBy(xpath = "//input[@id='delivery']")
+    private WebElement deliveryoption;
+    
     @FindBy(xpath = "//p[text()='Select Shipping Address']")
     private WebElement Selectshippingaddress;
     
@@ -112,7 +114,7 @@ public class PomClass {
     @FindBy(xpath = "//input[@type='file']")
     private WebElement LPO_uploading;
     
-    @FindBy(xpath = "(//button[@type='button'])[21]")
+    @FindBy(xpath = "//button[text()='Next']")
     private WebElement LPO_Next_button;
     
     @FindBy(xpath = "//button[@aria-label='Close']")
@@ -139,6 +141,9 @@ public class PomClass {
    @FindBy(xpath = "//div[@class='SubmitButton-CheckmarkIcon']")
    private WebElement Pay_stripe;
    
+   @FindBy(xpath = "//button[@class='SubmitButton SubmitButton--complete']")
+   private WebElement Pay_stripe_submitclick;
+   
    @FindBy(xpath = "//p[text()='Logout']")
    private WebElement Logout;
    
@@ -162,6 +167,9 @@ public class PomClass {
    
    @FindBy(xpath = "(//span[text()='Pending'])[1]")
    private WebElement Admin_Pendingclick;
+   
+   @FindBy(xpath = "//button[text()='View Request']")
+   private WebElement Admin_viewrequestCreditcontroller;
    
    @FindBy(xpath = "//button[text()=' Approve Order ']")
    	private WebElement Admin_Approveclick;
@@ -359,10 +367,10 @@ public class PomClass {
        Select_Payment_term.click();
        Thread.sleep(3000);
        COD.click();
-       Thread.sleep(3000);
-       Selectshippingaddress.click();
-       Thread.sleep(3000);
-       Selecting_address.click();
+       Thread.sleep(2000);
+    // Selectshippingaddress.click();
+       deliveryoption.click();
+    // Selecting_address.click();
        Thread.sleep(2000);
        reviewItems.click();
        Thread.sleep(3000);
@@ -382,7 +390,7 @@ public class PomClass {
        Reporter.log("CreatingOrderFullFlow", true);     
     }
     
-    //without uploading LPO...direct signInPurchase....& Card payment....
+  //without uploading LPO...direct signInPurchase....& Card payment....
     public void Testcase_06() throws InterruptedException {
         Thread.sleep(2000);
         mailid.sendKeys("ruban@yopmail.com");
@@ -391,7 +399,7 @@ public class PomClass {
         submitbutton.click();
         Thread.sleep(3000);
         Producttab.click();
-        Thread.sleep(2000);
+        Thread.sleep(1000);
         Searchbar.sendKeys("light");
         Thread.sleep(2000);
         productclick.click();
@@ -403,40 +411,44 @@ public class PomClass {
         Proceedtocart.click();
         Thread.sleep(3000);
         Proceedtocheckout.click();
-        Thread.sleep(3000);
-        paymentcard.click();
-        Thread.sleep(3000);
-        Select_Payment_term.click();
-        Thread.sleep(3000);
-        credit_card_debitcard.click();
-        Thread.sleep(3000);
-        Selectshippingaddress.click();
-        Thread.sleep(3000);
-        Selecting_address.click();
+         Thread.sleep(3000);
+         paymentcard.click();
+         Thread.sleep(3000);
+         Select_Payment_term.click();
+         Thread.sleep(3000);
+         credit_card_debitcard.click();
+         Thread.sleep(3000);
+      // Selectshippingaddress.click();
+     //  Thread.sleep(2000);
+        deliveryoption.click();
+         Thread.sleep(2000);
+      // Selecting_address.click();
         Thread.sleep(2000);
         reviewItems.click();
-        Thread.sleep(3000);
-      //SigninPurchaseOrder.click(); 
+         Thread.sleep(3000);
+      // SigninPurchaseOrder.click(); 
         checkout.click();
-        Thread.sleep(3000);
+         Thread.sleep(3000);
         Email_stripe.sendKeys("ruban@yopmail.com");
-        Thread.sleep(2000);
+         Thread.sleep(2000);
         Cardnumber_stripe.sendKeys("4242 4242 4242 4242");
-        Thread.sleep(2000);
+         Thread.sleep(2000);
         Expiry_stripe.sendKeys("12/34");
-        Thread.sleep(2000);
+         Thread.sleep(2000);
         CCV_stripe.sendKeys("123");
         Thread.sleep(2000);
         Holdername_stripe.sendKeys("Ruban");
         Thread.sleep(2000);
         postalcode_stripe.sendKeys("600001");
         Thread.sleep(3000);	
-        Pay_stripe.click();	
+        Pay_stripe_submitclick.click();
+         Pay_stripe.click();	
         Thread.sleep(20000);
         continueshopping.click();
         Reporter.log("2_CreatingOrderFullFlow", true);
          
      }
+
     
     // Customermake Order, Admin Approved Order, Schedule Delivery, Sync Nav, Skip to Shipment, Approve Picking, Arrange Shipment (End to End flow)
     public void Testcase_07() throws InterruptedException {
@@ -466,9 +478,9 @@ public class PomClass {
         Thread.sleep(2000);
         COD.click();
         Thread.sleep(2000);
-        Selectshippingaddress.click();
-        Thread.sleep(2000);
-        Selecting_address.click();
+     // Selectshippingaddress.click();
+        deliveryoption.click();
+     // Selecting_address.click();
         Thread.sleep(2000);
         reviewItems.click();
         Thread.sleep(3000);
@@ -479,7 +491,7 @@ public class PomClass {
         Logout.click();
         Thread.sleep(2000);
         Logoutpopup_button.click();
-        // Close browser
+     // Close browser
         driver.quit();
 
         // Open new browser (creditcontroller)
@@ -504,6 +516,7 @@ public class PomClass {
         Admin_Request_tab.click();
         Thread.sleep(2000);
         Admin_Pendingclick.click();
+       // Admin_viewrequestCreditcontroller.click();
         Thread.sleep(2000);
         Admin_Approveclick.click();
         Thread.sleep(2000);
@@ -678,9 +691,9 @@ public class PomClass {
         Thread.sleep(2000);
         COD.click();
         Thread.sleep(2000);
-        Selectshippingaddress.click();
-        Thread.sleep(2000);
-        Selecting_address.click();
+     // Selectshippingaddress.click();
+        deliveryoption.click();
+     // Selecting_address.click();
         Thread.sleep(2000);
         reviewItems.click();
         Thread.sleep(3000);
@@ -845,44 +858,35 @@ public class PomClass {
 
         productclick.click();
         Thread.sleep(4000);
-        
-        try {
-            driver.findElement(By.xpath("//button[@aria-label='Add to Cart']")).click();
-            System.out.println("Clicked Add to Cart button");
-        } catch (NoSuchElementException e) {
-            Addtocartclicktop.click();
-            System.out.println("Add to Cart not found, clicked Addtocartclicktop");
-        }
-        
-         
-    
-    Thread.sleep(3000);
-    Proceedtocart.click();
-    Thread.sleep(3000);
-    Proceedtocheckout.click();
-    Thread.sleep(3000);
-    Payment_cash.click();
-    Thread.sleep(2000);
-    Select_Payment_term.click();
-    Thread.sleep(2000);
-    COD.click();
-    Thread.sleep(2000);
-    Selectshippingaddress.click();
-    Thread.sleep(2000);
-    Selecting_address.click();
-    Thread.sleep(2000);
-    reviewItems.click();
-    Thread.sleep(3000);
-    checkout.click();
-    Thread.sleep(5000);
-    continueshopping.click();
-    Thread.sleep(2000);
-    Logout.click();
-    Thread.sleep(2000);
-    Logoutpopup_button.click();
-    // Close browser
-    driver.quit();
-
+        Addtocartclickon_productdetails1.click();
+        Thread.sleep(3000);
+        Addtocartclicktop.click();
+        Thread.sleep(3000);
+        Proceedtocart.click();
+        Thread.sleep(3000);
+        Proceedtocheckout.click();
+        Thread.sleep(3000);
+        Payment_cash.click();
+        Thread.sleep(2000);
+        Select_Payment_term.click();
+        Thread.sleep(2000);
+        COD.click();
+        Thread.sleep(2000);
+     // Selectshippingaddress.click();
+        deliveryoption.click();
+     // Selecting_address.click();
+        Thread.sleep(2000);
+        reviewItems.click();
+        Thread.sleep(3000);
+        checkout.click();
+        Thread.sleep(5000);
+        continueshopping.click();
+        Thread.sleep(2000);
+        Logout.click();
+        Thread.sleep(2000);
+        Logoutpopup_button.click();
+     // Close browser
+        driver.quit();
 
 }}
 
