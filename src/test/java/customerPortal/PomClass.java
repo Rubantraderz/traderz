@@ -1,11 +1,6 @@
 package customerPortal;
 
 
-import java.time.Duration;
-import java.util.Map;
-
-import org.openqa.selenium.By;
-import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.edge.EdgeDriver;
 import org.openqa.selenium.edge.EdgeOptions;
@@ -13,11 +8,19 @@ import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
 import org.testng.Assert;
 import org.testng.Reporter;
-
 import io.restassured.RestAssured;
 import io.restassured.response.Response;
+import java.time.Duration;
+import java.util.Map;
+import java.io.File;
+import java.io.IOException;
+import org.apache.commons.io.FileUtils;
+import org.openqa.selenium.OutputType;
+import org.openqa.selenium.TakesScreenshot;
 
 
 public class PomClass {
@@ -30,13 +33,13 @@ public class PomClass {
     
     //----------------------Customer Portal Elements------------------------------//
     
-    @FindBy(xpath = "//input[@type='email']")
+    @FindBy(xpath = "//input[@name='email']")
     private WebElement mailid;
     
     @FindBy(xpath = "//input[@type='password']")
     private WebElement password;
 
-    @FindBy(xpath = "//button[@type='submit']")
+    @FindBy(xpath = "//button[text()='Submit']")
     private WebElement submitbutton;
     
     @FindBy(xpath = "//input[@type='email']")
@@ -48,8 +51,27 @@ public class PomClass {
     @FindBy(xpath = "//span[text()='Login']")
     private WebElement AdminLoginbutton;
     
+    @FindBy(xpath = "(//a[@href='/home'])[2]")	
+    private WebElement HomeLogtab;
+    
+    @FindBy(xpath = "//img[@alt='a.title']")
+    private WebElement Discounttitle;
+    
+    @FindBy(xpath = "(//div[@class='w-full relative'])[4]")
+    private WebElement Discountproducts1;
+    
+    @FindBy(xpath = "//p[@class='text-sm font-bold text-[var(--t-blue-normal)]']")
+    private WebElement discountText;
+  
+    
     @FindBy(xpath = "//a[@href='/products' and .//p[normalize-space()='Products']]")
     private WebElement Producttab;
+    
+    @FindBy(xpath = "(//p[text()='Accessories'])[2]")
+    private WebElement Accessories_subcategory;
+    
+    @FindBy(xpath = "(//p[text()='Cable Accessories'])[2]")
+    private WebElement Cableaccessories_subcategory;
     
     @FindBy(xpath = "//input[@placeholder='Search for anything..']")
     private WebElement Searchbar;
@@ -143,6 +165,33 @@ public class PomClass {
    
    @FindBy(xpath = "//button[@class='SubmitButton SubmitButton--complete']")
    private WebElement Pay_stripe_submitclick;
+   
+   @FindBy(xpath = "//p[text()='Settings']")
+   private WebElement Settings_tab;
+   
+   @FindBy(xpath = "(//span[text()='Edit Address'])[4]")
+   private WebElement Editaddress;
+   
+   @FindBy(xpath = "//input[@id='building_name']")
+   private WebElement Buildingname_input;
+   
+   @FindBy(xpath = "//span[text()='Update Address']")
+   private WebElement Updateaddress_button;
+   
+   @FindBy(xpath = "//span[text()='Add New']")
+   private WebElement Addnewaddress_button;
+   
+   @FindBy(xpath = "//input[@placeholder='Search for a location...']")
+   private WebElement Searchlocation_input;
+   
+   @FindBy(xpath = "//span[text()='75B Street - Dubai - United Arab Emirates']")
+   private WebElement SelectSearchedlocation;
+   
+   @FindBy(xpath = "(//input[@type='text'])[6]")
+   private WebElement Phonenumber_input;
+   
+   @FindBy(xpath = "(//span[text()='Add New'])[2]")
+   private WebElement AddNewbuuton_address;
    
    @FindBy(xpath = "//p[text()='Logout']")
    private WebElement Logout;
@@ -453,7 +502,7 @@ public class PomClass {
     // Customermake Order, Admin Approved Order, Schedule Delivery, Sync Nav, Skip to Shipment, Approve Picking, Arrange Shipment (End to End flow)
     public void Testcase_07() throws InterruptedException {
         Thread.sleep(2000);
-        mailid.sendKeys("ruban@yopmail.com");
+        mailid.sendKeys("c0944_1@email.com");
         password.sendKeys("Admin@123"); 
         Thread.sleep(2000);
         submitbutton.click();
@@ -888,7 +937,110 @@ public class PomClass {
      // Close browser
         driver.quit();
 
-}}
+}
+    
+    public void Testcase_010() throws InterruptedException, IOException {
+
+        Thread.sleep(2000);
+        mailid.sendKeys("ruban@yopmail.com");
+        password.sendKeys("Admin@123"); 
+        Thread.sleep(2000);
+        submitbutton.click();
+        Thread.sleep(3000);
+        HomeLogtab.click();
+        Thread.sleep(2000);
+        Discounttitle.click();
+        Thread.sleep(2000);
+        Discountproducts1.click();
+        Thread.sleep(2000);
+        Addtocartclickon_productdetails1.click();
+        Thread.sleep(3000);
+        Addtocartclicktop.click();
+		Thread.sleep(3000);
+     // ===== VERIFY DISCOUNT APPLIED =====
+        String text = driver.findElement(
+        	    By.xpath("//span[@class='line-through']")
+        	).getText();
+
+        	System.out.println(text);
+        	Reporter.log("Discount Applied & Screenshotproof", true);
+        	Thread.sleep(3000);
+        	Proceedtocart.click();
+        	Thread.sleep(3000);
+            Proceedtocheckout.click();
+            Thread.sleep(3000);
+            Payment_cash.click();
+            Thread.sleep(2000);
+            Select_Payment_term.click();
+            Thread.sleep(2000);
+            COD.click();
+            Thread.sleep(2000);
+            deliveryoption.click();
+            Thread.sleep(2000);
+            reviewItems.click();
+            Thread.sleep(3000);
+
+            File src = ((TakesScreenshot)driver).getScreenshotAs(OutputType.FILE);
+
+            FileUtils.copyFile(src, new File("screenshots/reviewItems.png"));
+            
+            
+    }
+    
+    public void Testcase_011() throws InterruptedException, IOException {
+
+        Thread.sleep(2000);
+        mailid.sendKeys("ruban@yopmail.com");
+        password.sendKeys("Admin@123"); 
+        Thread.sleep(2000);
+        submitbutton.click();
+        Thread.sleep(3000);
+    Settings_tab.click();
+    Thread.sleep(2000);
+    Editaddress.click();
+    Thread.sleep(2000);
+    Buildingname_input.clear();
+    Buildingname_input.sendKeys("Automation Testing Building");
+    Thread.sleep(2000);
+    Updateaddress_button.click();
+    Reporter.log("Edit Address & Add New Address in Settings", true);
+    Thread.sleep(3000);
+    Addnewaddress_button.click();
+    Thread.sleep(2000);
+    Searchlocation_input.sendKeys("777");
+    Thread.sleep(2000);
+    SelectSearchedlocation.click();
+    Thread.sleep(2000);
+    Phonenumber_input.sendKeys("987654321");
+    Thread.sleep(2000);
+    AddNewbuuton_address.click();
+    File src = ((TakesScreenshot)driver).getScreenshotAs(OutputType.FILE);
+
+    FileUtils.copyFile(src, new File("screenshots/addnewaddress.png"));
+    Thread.sleep(2000);
+    Producttab.click();
+    }
+    
+    public void Testcase_012() throws InterruptedException, IOException {
+
+        Thread.sleep(2000);
+        mailid.sendKeys("ruban@yopmail.com");
+        password.sendKeys("Admin@123"); 
+        Thread.sleep(2000);
+        submitbutton.click();
+        Thread.sleep(3000);
+        Producttab.click();
+        Thread.sleep(2000);
+        Searchbar.sendKeys("light");				
+        
+        
+        }
+    
+    
+    
+    }
+       
+
 
 
     

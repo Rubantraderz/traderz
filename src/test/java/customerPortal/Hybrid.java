@@ -1,5 +1,7 @@
 package customerPortal;
 
+import java.io.IOException;
+
 import org.openqa.selenium.support.PageFactory;
 import org.testng.Reporter;
 import org.testng.annotations.Test;
@@ -81,8 +83,21 @@ public class Hybrid extends BaseClass{
         Reporter.log("Testcase_09 is pass", true);  
     }
     
+    @Test
+    public void Testcase_010() throws InterruptedException, IOException{
+        PomClass pc = new PomClass(driver);
+        PageFactory.initElements(driver, pc);  
+        pc.Testcase_010();
+        Reporter.log("Testcase_010 is pass", true);  
+    }
     
-    
+    @Test
+    public void Testcase_011() throws InterruptedException, IOException{
+        PomClass pc = new PomClass(driver);
+        PageFactory.initElements(driver, pc);  
+        pc.Testcase_011();
+        Reporter.log("Testcase_011 is pass", true); 
+    }
     
     
 }
