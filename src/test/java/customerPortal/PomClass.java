@@ -1,6 +1,16 @@
 package customerPortal;
 
 
+import java.io.File;
+import java.io.IOException;
+import java.time.Duration;
+import java.util.Map;
+
+import org.apache.commons.io.FileUtils;
+import org.openqa.selenium.By;
+import org.openqa.selenium.OutputType;
+import org.openqa.selenium.TakesScreenshot;
+import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.edge.EdgeDriver;
 import org.openqa.selenium.edge.EdgeOptions;
@@ -8,19 +18,11 @@ import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
-import org.openqa.selenium.By;
-import org.openqa.selenium.WebDriver;
 import org.testng.Assert;
 import org.testng.Reporter;
+
 import io.restassured.RestAssured;
 import io.restassured.response.Response;
-import java.time.Duration;
-import java.util.Map;
-import java.io.File;
-import java.io.IOException;
-import org.apache.commons.io.FileUtils;
-import org.openqa.selenium.OutputType;
-import org.openqa.selenium.TakesScreenshot;
 
 
 public class PomClass {
@@ -502,7 +504,7 @@ public class PomClass {
     // Customermake Order, Admin Approved Order, Schedule Delivery, Sync Nav, Skip to Shipment, Approve Picking, Arrange Shipment (End to End flow)
     public void Testcase_07() throws InterruptedException {
         Thread.sleep(2000);
-        mailid.sendKeys("c0944_1@email.com");
+        mailid.sendKeys("ruban@yopmail.com");
         password.sendKeys("Admin@123"); 
         Thread.sleep(2000);
         submitbutton.click();
@@ -1032,11 +1034,16 @@ public class PomClass {
         Producttab.click();
         Thread.sleep(2000);
         Searchbar.sendKeys("light");				
-        
-        
+        Accessories_subcategory.click();
+        Cableaccessories_subcategory.click();      
+        Reporter.log("Multiple Subcategory Navigation", true);
         }
     
-    
+       public void Testcase_013() throws InterruptedException, IOException {
+       Thread.sleep(2000);
+       mailid.sendKeys("ruban@yopmail.com");	
+       password.sendKeys("Admin@123");
+       }
     
     }
        
