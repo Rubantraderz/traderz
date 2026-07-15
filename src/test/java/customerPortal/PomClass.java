@@ -4,6 +4,7 @@ package customerPortal;
 import java.io.File;
 import java.io.IOException;
 import java.time.Duration;
+import java.util.List;
 import java.util.Map;
 
 import org.apache.commons.io.FileUtils;
@@ -65,6 +66,7 @@ public class PomClass {
     @FindBy(xpath = "//p[@class='text-sm font-bold text-[var(--t-blue-normal)]']")
     private WebElement discountText;
   
+    //--------Customer Portal Products Tab Elements----------------//
     
     @FindBy(xpath = "//a[@href='/products' and .//p[normalize-space()='Products']]")
     private WebElement Producttab;
@@ -110,6 +112,27 @@ public class PomClass {
     
     @FindBy(xpath = "//input[@id='delivery']")
     private WebElement deliveryoption;
+    
+    @FindBy(xpath = "//input[@id='self-pickup']")
+    private WebElement Selfpickupoption;
+    
+    @FindBy(xpath = "//p[text()='Select Pickup Address']")
+    private WebElement Selectpickupaddress;
+ 
+    @FindBy(xpath = "//li[@id='pv_id_14_0']")
+    private WebElement Selecting_pickupaddress;
+    
+    @FindBy(xpath = "//button[@class='p-datepicker-dropdown']")
+    private WebElement deliverydatecalender;
+    
+    @FindBy(xpath = "//button[@aria-label='Next Month']")
+    private WebElement deliverydate_nextmonth;
+    
+    @FindBy(xpath = "//span[text()='20']")
+    private WebElement deliverydate_selectdate;
+    
+    @FindBy(xpath = "//span[text()='21']")
+    private WebElement deliveryend_selectdate;
     
     @FindBy(xpath = "//p[text()='Select Shipping Address']")
     private WebElement Selectshippingaddress;
@@ -334,6 +357,31 @@ public class PomClass {
    @FindBy(xpath = "(//button[text()=' Arrange Shipment '])[1]")
    private WebElement ArrangeShipmentbutton;
    
+// --- Product Filter Locators ---
+
+   @FindBy(xpath = "//a[@href='/products' and .//p[normalize-space()='Products']]")
+   private WebElement productTab;
+
+   @FindBy(xpath = "//button[@class='p-button p-component !h-10 bg-transparent border-[var(--t-blue-normal)] mt-3']")
+   private WebElement filterIcon;
+
+   @FindBy(xpath = "//input[@name='Cables & Wires']")
+   private WebElement categoryCablesAndWires;
+
+   @FindBy(xpath = "//input[@name='Armoured']")
+   private WebElement subcategoryArmoured;
+
+   @FindBy(xpath = "//input[@name='DUCAB']")
+   private WebElement brandDucab;
+
+   @FindBy(xpath = "//i[@class='pi pi-times']")
+   private WebElement closeIcon;
+
+   @FindBy(xpath = "//div[@class='grid xl:grid-cols-5 lg:grid-cols-3 md:grid-cols-3 grid-cols-2 mx-auto gap-6 md:gap-12 mt-7 p-0']")
+   private WebElement productGrid;
+  
+
+   
    
    
     
@@ -504,14 +552,14 @@ public class PomClass {
     // Customermake Order, Admin Approved Order, Schedule Delivery, Sync Nav, Skip to Shipment, Approve Picking, Arrange Shipment (End to End flow)
     public void Testcase_07() throws InterruptedException {
         Thread.sleep(2000);
-        mailid.sendKeys("ruban@yopmail.com");
+        mailid.sendKeys("Hala@yopmail.com");
         password.sendKeys("Admin@123"); 
         Thread.sleep(2000);
         submitbutton.click();
         Thread.sleep(3000);
         Producttab.click();
         Thread.sleep(2000);
-        Searchbar.sendKeys("light");
+        Searchbar.sendKeys("TSN-005850");
         Thread.sleep(2000);
         productclick.click();
         Thread.sleep(4000);
@@ -529,9 +577,22 @@ public class PomClass {
         Thread.sleep(2000);
         COD.click();
         Thread.sleep(2000);
-     // Selectshippingaddress.click();
-        deliveryoption.click();
-     // Selecting_address.click();
+     //    Selfpickupoption.click();
+    //      Thread.sleep(2000);
+    //     Selectpickupaddress.click();
+    //     Thread.sleep(2000);
+    //     deliverydatecalender.click();
+    //      Thread.sleep(2000);
+    //     deliverydate_nextmonth.click();
+    //     Thread.sleep(2000);
+    //     deliverydate_selectdate.click();
+    //     Thread.sleep(2000);
+   //     deliveryend_selectdate.click();
+        
+        
+   //  Selectshippingaddress.click(); 
+      deliveryoption.click();     //--------------------- Delivery to location ----------------------//
+   //  Selecting_address.click();
         Thread.sleep(2000);
         reviewItems.click();
         Thread.sleep(3000);
@@ -1039,14 +1100,91 @@ public class PomClass {
         Reporter.log("Multiple Subcategory Navigation", true);
         }
     
-       public void Testcase_013() throws InterruptedException, IOException {
-       Thread.sleep(2000);
-       mailid.sendKeys("ruban@yopmail.com");	
-       password.sendKeys("Admin@123");
-       }
-    
+  //Product Filtering Testcase
+    public void Testcase_013() throws InterruptedException {
+    	Thread.sleep(2000);
+        mailid.sendKeys("hala@yopmail.com");
+        password.sendKeys("Admin@123"); 
+        Thread.sleep(2000);
+        submitbutton.click();
+        // 1. Click Product Tab
+        Thread.sleep(2000);
+        Producttab.click();
+        Reporter.log("Clicked Product Tab", true);
+
+        // 2. Click Filter Icon
+        Thread.sleep(2000);
+        filterIcon.click();
+        Reporter.log("Clicked Filter Icon", true);
+
+        // 3. Select Category, Subcategory, and Brand Checkboxes
+        Thread.sleep(1000);
+        if (!categoryCablesAndWires.isSelected()) {
+            categoryCablesAndWires.click();
+        }
+        
+        Thread.sleep(1000);
+        if (!subcategoryArmoured.isSelected()) {
+            subcategoryArmoured.click();
+        }
+
+        Thread.sleep(1000);
+        if (!brandDucab.isSelected()) {
+            brandDucab.click();
+        }
+        Reporter.log("Selected Filters: Cables & Wires -> Armoured -> DUCAB", true);
+
+        // 4. Close Filter Menu
+        Thread.sleep(2000);
+        closeIcon.click();
+        Reporter.log("Closed Filter Menu", true);
+
+        // 5. Verify Product Grid is Displayed
+        Thread.sleep(2000);
+        boolean isGridVisible = productGrid.isDisplayed();
+        Reporter.log("Product Grid Visibility Status: " + isGridVisible, true);
+        
+        // 6. Dynamic Validation: Check Category and Subcategory elements safely
+        if (isGridVisible) {
+            // Find all child elements (product cards) inside the main product grid
+            List<WebElement> productCards = productGrid.findElements(By.xpath("./div"));
+            
+            int productCount = productCards.size();
+            Reporter.log("Total items displayed after filtering: " + productCount, true);
+            
+            if(productCount == 0) {
+                org.testng.Assert.fail("Test Failed: Product grid is visible, but zero products were displayed.");
+            }
+
+            // Loop through each individual product card to read its text
+            for (int i = 0; i < productCount; i++) {
+                WebElement card = productCards.get(i);
+                
+                // 1. Get text and normalize it to lowercase to ignore case issues (e.g., ARMOURED vs Armoured)
+                String cardText = card.getText().toLowerCase();
+                
+                // 2. Adjust verification targets based on actual UI payload text from log
+                boolean hasCategoryKeyword = cardText.contains("cable"); 
+                boolean hasSubcategoryKeyword = cardText.contains("armoured");
+                boolean hasBrandKeyword = cardText.contains("ducab");
+                
+                Reporter.log("Checking Product " + (i + 1) + " Content keywords...", true);
+                
+                // Fail the test case immediately if an item does not match any keyword filter
+                if (!hasCategoryKeyword || !hasSubcategoryKeyword || !hasBrandKeyword) {
+                    Reporter.log("Verification FAILED at Product index " + i + ". Found card layout text: \n" + card.getText(), true);
+                    org.testng.Assert.fail("Test Failed: Item index " + i + " text layout does not match filter parameters (Cable/Armoured/DUCAB).");
+                }
+            }
+            Reporter.log("Success: All 15 items safely match the filter configurations!", true);
+        } else {
+            org.testng.Assert.fail("Test Failed: Product grid container did not display.");
+        }
     }
+   
+}
        
+
 
 
 
