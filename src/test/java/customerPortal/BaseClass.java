@@ -5,35 +5,27 @@ import java.time.Duration;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.support.ui.WebDriverWait;
-import org.testng.annotations.AfterClass;
-import org.testng.annotations.BeforeClass;
+import org.testng.annotations.AfterMethod;
+import org.testng.annotations.BeforeMethod;
 
 public class BaseClass {
-    public WebDriver driver;       //protected
+    public WebDriver driver;       
     public WebDriverWait wait;
 
-    // Runs once before any @Test methods in the subclass
-    @BeforeClass
-    public void beforeAll() {
-        openBrowser();
-    }
-
-    // Runs once after all @Test methods in the subclass
-    @AfterClass(alwaysRun = true)
-    public void afterAll() {
-        closeBrowser();
-    }
-
+    // Runs automatically BEFORE EVERY @Test method in your test classes
+    @BeforeMethod
     public void openBrowser() {
         driver = new ChromeDriver();
         wait = new WebDriverWait(driver, Duration.ofSeconds(30));
         driver.manage().window().maximize();
-        driver.get("https://customer-v2.traderzdev.com/auth/login");
+        driver.get("https://customer-v2.traderzdev.com");
     }
 
+    // Runs automatically AFTER EVERY @Test method in your test classes
+    @AfterMethod(alwaysRun = true)
     public void closeBrowser() {
         if (driver != null) {
-            driver.quit();
+            driver.quit(); // Closes the browser cleanly after the test case finishes
         }
     }
 }

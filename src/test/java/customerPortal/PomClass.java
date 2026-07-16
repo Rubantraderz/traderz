@@ -1,17 +1,6 @@
 package customerPortal;
 
 
-import java.io.File;
-import java.io.IOException;
-import java.time.Duration;
-import java.util.List;
-import java.util.Map;
-
-import org.apache.commons.io.FileUtils;
-import org.openqa.selenium.By;
-import org.openqa.selenium.OutputType;
-import org.openqa.selenium.TakesScreenshot;
-import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.edge.EdgeDriver;
 import org.openqa.selenium.edge.EdgeOptions;
@@ -19,11 +8,20 @@ import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
 import org.testng.Assert;
 import org.testng.Reporter;
-
 import io.restassured.RestAssured;
 import io.restassured.response.Response;
+import java.time.Duration;
+import java.util.List;
+import java.util.Map;
+import java.io.File;
+import java.io.IOException;
+import org.apache.commons.io.FileUtils;
+import org.openqa.selenium.OutputType;
+import org.openqa.selenium.TakesScreenshot;
 
 
 public class PomClass {
@@ -60,7 +58,7 @@ public class PomClass {
     @FindBy(xpath = "//img[@alt='a.title']")
     private WebElement Discounttitle;
     
-    @FindBy(xpath = "(//div[@class='w-full relative'])[4]")
+    @FindBy(xpath = "(//h2[@class='text-[var(--t-blue-normal)] !font-semibold text-sm text-left line-clamp-3 break-normal'])[1]")
     private WebElement Discountproducts1;
     
     @FindBy(xpath = "//p[@class='text-sm font-bold text-[var(--t-blue-normal)]']")
@@ -194,7 +192,7 @@ public class PomClass {
    @FindBy(xpath = "//p[text()='Settings']")
    private WebElement Settings_tab;
    
-   @FindBy(xpath = "(//span[text()='Edit Address'])[4]")
+   @FindBy(xpath = "(//span[text()='Edit Address'])[2]")
    private WebElement Editaddress;
    
    @FindBy(xpath = "//input[@id='building_name']")
@@ -390,29 +388,31 @@ public class PomClass {
     //Customer Portal Login Testcases
     public void Testcase_01() throws InterruptedException {
         Thread.sleep(2000);
-        mailid.sendKeys("ruban@yopmail.com");
+        mailid.sendKeys("Hala@yopmail.com");
         password.sendKeys("Admin@123"); 
         Thread.sleep(2000);
         submitbutton.click();
+        driver.quit();
         Reporter.log("LoginCustomer", true);
     }
     
     // After login, directly clicking products tab without searching for product.
     public void Testcase_02() throws InterruptedException {
         Thread.sleep(2000);
-        mailid.sendKeys("ruban@yopmail.com");
+        mailid.sendKeys("Hala@yopmail.com");
         password.sendKeys("Admin@123"); 
         Thread.sleep(2000);
         submitbutton.click();
         Thread.sleep(3000);
         Producttab.click();
+        driver.quit();
         Reporter.log("ProdctsTab opened", true);
     }
     
     // After login, directly clicking products tab with searching for product.
     public void Testcase_03() throws InterruptedException {
         Thread.sleep(2000);
-        mailid.sendKeys("ruban@yopmail.com");
+        mailid.sendKeys("Hala@yopmail.com");
         password.sendKeys("Admin@123"); 
         Thread.sleep(2000);
         submitbutton.click();
@@ -420,13 +420,14 @@ public class PomClass {
         Producttab.click();
         Thread.sleep(2000);
         Searchbar.sendKeys("light");
+        driver.quit();
         Reporter.log("Products Searched", true);
     }
     
     // After login, directly clicking products tab with searching for product and click on that product.
     public void Testcase_04() throws InterruptedException {
         Thread.sleep(2000);
-        mailid.sendKeys("ruban@yopmail.com");
+        mailid.sendKeys("Hala@yopmail.com");
         password.sendKeys("Admin@123"); 
         Thread.sleep(2000);
         submitbutton.click();
@@ -442,7 +443,7 @@ public class PomClass {
     //with uploading LPO...Order creation full flow with COD payment and uploading LPO and sign purchase order.
     public void Testcase_05() throws InterruptedException {
        Thread.sleep(2000);
-       mailid.sendKeys("ruban@yopmail.com");
+       mailid.sendKeys("Hala@yopmail.com");
        password.sendKeys("Admin@123"); 
        Thread.sleep(2000);
        submitbutton.click();
@@ -492,7 +493,7 @@ public class PomClass {
   //without uploading LPO...direct signInPurchase....& Card payment....
     public void Testcase_06() throws InterruptedException {
         Thread.sleep(2000);
-        mailid.sendKeys("ruban@yopmail.com");
+        mailid.sendKeys("Hala@yopmail.com");
         password.sendKeys("Admin@123"); 
         Thread.sleep(2000);
         submitbutton.click();
@@ -778,7 +779,7 @@ public class PomClass {
     // Credit controller rejecting the order and customer trying to place order again with same product and same flow.
     public void Testcase_08() throws InterruptedException {
         Thread.sleep(2000);
-        mailid.sendKeys("ruban@yopmail.com");
+        mailid.sendKeys("Hala@yopmail.com");
         password.sendKeys("Admin@123"); 
         Thread.sleep(2000);
         submitbutton.click();
@@ -943,7 +944,7 @@ public class PomClass {
     public void Testcase_09() throws InterruptedException {
 
         Thread.sleep(2000);
-        mailid.sendKeys("ruban@yopmail.com");
+        mailid.sendKeys("Hala@yopmail.com");
         password.sendKeys("Admin@123"); 
         Thread.sleep(2000);
         submitbutton.click();
@@ -1005,7 +1006,7 @@ public class PomClass {
     public void Testcase_010() throws InterruptedException, IOException {
 
         Thread.sleep(2000);
-        mailid.sendKeys("ruban@yopmail.com");
+        mailid.sendKeys("Hala@yopmail.com");
         password.sendKeys("Admin@123"); 
         Thread.sleep(2000);
         submitbutton.click();
@@ -1053,7 +1054,7 @@ public class PomClass {
     public void Testcase_011() throws InterruptedException, IOException {
 
         Thread.sleep(2000);
-        mailid.sendKeys("ruban@yopmail.com");
+        mailid.sendKeys("Hala@yopmail.com");
         password.sendKeys("Admin@123"); 
         Thread.sleep(2000);
         submitbutton.click();
@@ -1070,8 +1071,8 @@ public class PomClass {
     Thread.sleep(3000);
     Addnewaddress_button.click();
     Thread.sleep(2000);
-    Searchlocation_input.sendKeys("777");
-    Thread.sleep(2000);
+    Searchlocation_input.sendKeys("20");
+    Thread.sleep(4000);
     SelectSearchedlocation.click();
     Thread.sleep(2000);
     Phonenumber_input.sendKeys("987654321");
@@ -1087,7 +1088,7 @@ public class PomClass {
     public void Testcase_012() throws InterruptedException, IOException {
 
         Thread.sleep(2000);
-        mailid.sendKeys("ruban@yopmail.com");
+        mailid.sendKeys("Hala@yopmail.com");
         password.sendKeys("Admin@123"); 
         Thread.sleep(2000);
         submitbutton.click();
